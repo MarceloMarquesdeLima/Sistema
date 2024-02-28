@@ -1,0 +1,152 @@
+unit UCadastro;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Error, FireDAC.UI.Intf, FireDAC.Phys.Intf, FireDAC.Stan.Def,
+  FireDAC.Stan.Pool, FireDAC.Stan.Async, FireDAC.Phys, FireDAC.VCLUI.Wait,
+  FireDAC.Stan.Param, FireDAC.DatS, FireDAC.DApt.Intf, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, FireDAC.Phys.FB, FireDAC.Phys.FBDef,
+  Vcl.ExtCtrls, Vcl.StdCtrls, Vcl.Mask, Vcl.DBCtrls, Vcl.Buttons;
+
+type
+  TFrmCadastro = class(TForm)
+    Conexao: TFDConnection;
+    QCadastro: TFDQuery;
+    DSCadastro: TDataSource;
+    QCadastroID_CONTATO: TIntegerField;
+    QCadastroNOME: TStringField;
+    QCadastroTELEFONE: TStringField;
+    QCadastroCELULAR: TStringField;
+    QCadastroEMAIL: TStringField;
+    Label1: TLabel;
+    edtId: TDBEdit;
+    Label2: TLabel;
+    edtNome: TDBEdit;
+    Label3: TLabel;
+    edtTelefone: TDBEdit;
+    Label4: TLabel;
+    edtCelular: TDBEdit;
+    Label5: TLabel;
+    edtEmail: TDBEdit;
+    pnlCadContato: TPanel;
+    pnlCadRodape: TPanel;
+    btnNovo: TBitBtn;
+    btnEditar: TBitBtn;
+    btnDeletar: TBitBtn;
+    btnGravar: TBitBtn;
+    btnCancelar: TBitBtn;
+    btnAtualizar: TBitBtn;
+    btnFechar: TBitBtn;
+    DBNavigator1: TDBNavigator;
+    btnPesquisa: TButton;
+    procedure btnNovoClick(Sender: TObject);
+    procedure btnEditarClick(Sender: TObject);
+    procedure btnDeletarClick(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+    procedure btnCancelarClick(Sender: TObject);
+    procedure btnAtualizarClick(Sender: TObject);
+    procedure btnFecharClick(Sender: TObject);
+    procedure FormKeyPress(Sender: TObject; var Key: Char);
+    procedure btnPesquisaClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  FrmCadastro: TFrmCadastro;
+
+implementation
+
+{$R *.dfm}
+
+uses UPesquisa;
+
+procedure TFrmCadastro.btnAtualizarClick(Sender: TObject);
+begin
+  QCadastro.Refresh;
+  messagedlg('Registro atualizado com sucesso!',mtInformation,[mbOk],0);
+end;
+
+procedure TFrmCadastro.btnCancelarClick(Sender: TObject);
+begin
+  QCadastro.Cancel;
+end;
+
+procedure TFrmCadastro.btnDeletarClick(Sender: TObject);
+begin
+//Mensagem de confirmação para sair do sistema
+  if messagedlg('Deseja deletar o registro?',mtConfirmation,[mbOk,mbNo],0)=mrOk then
+    begin
+       QCadastro.Delete;
+    end
+    else
+    abort;
+end;
+
+procedure TFrmCadastro.btnEditarClick(Sender: TObject);
+begin
+  if messagedlg('Deseja editar o registro?',mtConfirmation,[mbOk,mbNo],0)=mrOk then
+    begin
+       QCadastro.Edit;
+    end
+    else
+    abort;
+end;
+
+procedure TFrmCadastro.btnFecharClick(Sender: TObject);
+begin
+//Mensagem de confirmação para sair do sistema
+  if messagedlg('Deseja sair do sistema?',mtConfirmation,[mbOk,mbNo],0)=mrOk then
+    begin
+       Application.Terminate;
+    end
+    else
+    abort;
+end;
+
+procedure TFrmCadastro.btnGravarClick(Sender: TObject);
+begin
+  QCadastro.Post;
+  messagedlg('Registro salvo com sucesso!',mtInformation,[mbOk],0);
+end;
+
+procedure TFrmCadastro.btnNovoClick(Sender: TObject);
+  var prox: integer;
+begin
+  QCadastro.Active := true;
+  QCadastro.last;
+  prox := QCadastroId_Contato.AsInteger + 1;
+  QCadastro.Append;
+  QCadastroId_Contato.AsInteger := prox;
+  edtNome.SetFocus;
+
+end;
+
+procedure TFrmCadastro.btnPesquisaClick(Sender: TObject);
+begin
+  frmPesquisa := TfrmPesquisa.Create(self);
+  frmPesquisa.ShowModel;
+  try
+
+  finally
+    frmPesquisa.Free;
+    frmPesquisa := nil;
+  end;
+end;
+
+procedure TFrmCadastro.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+//Configura a tecla enter
+  if key=#13 then
+    begin
+      key:=#0;
+      Perform(wm_nextDlgCtl,0,0);
+    end;
+end;
+
+end.

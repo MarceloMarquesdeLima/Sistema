@@ -1,0 +1,14 @@
+program CadastroContato;
+
+uses
+  Vcl.Forms,
+  UCadastro in '..\Formulario\UCadastro.pas' {FrmCadastro};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TFrmCadastro, FrmCadastro);
+  Application.Run;
+end.

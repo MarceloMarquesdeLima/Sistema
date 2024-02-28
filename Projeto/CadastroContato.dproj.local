@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<Transactions>
+    <Transaction>2023/12/27 03:48:25.000.526,=C:\Users\marce\OneDrive\Bkps\Documentos\Embarcadero\Studio\Projects\Unit1.pas</Transaction>
+    <Transaction>2023/12/27 03:51:28.000.908,C:\Users\marce\OneDrive\Bkps\Documentos\Embarcadero\Studio\Projects\Unit1.dfm=C:\projetos\Deplhi\Sistema\Formulario\UCadastro.dfm</Transaction>
+    <Transaction>2023/12/27 03:51:28.000.908,C:\Users\marce\OneDrive\Bkps\Documentos\Embarcadero\Studio\Projects\Unit1.pas=C:\projetos\Deplhi\Sistema\Formulario\UCadastro.pas</Transaction>
+    <Transaction>2023/12/27 03:51:52.000.105,C:\Users\marce\OneDrive\Bkps\Documentos\Embarcadero\Studio\Projects\Project1.dproj=C:\projetos\Deplhi\Sistema\Projeto\CadastroContato.dproj</Transaction>
+    <Transaction>2023/12/27 05:18:47.000.825,=C:\projetos\Deplhi\Sistema\Projeto\Unit1.pas</Transaction>
+    <Transaction>2023/12/27 05:20:38.000.676,C:\projetos\Deplhi\Sistema\Projeto\Unit1.pas=C:\projetos\Deplhi\Sistema\Formulario\UPesquisa.pas</Transaction>
+    <Transaction>2023/12/27 05:20:38.000.676,C:\projetos\Deplhi\Sistema\Projeto\Unit1.dfm=C:\projetos\Deplhi\Sistema\Formulario\UPesquisa.dfm</Transaction>
+  </Transactions>
+</BorlandProject>

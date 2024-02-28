@@ -1,0 +1,76 @@
+unit UPesquisa;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.DBCtrls, Vcl.Grids,
+  Vcl.DBGrids, Vcl.ExtCtrls, Vcl.StdCtrls, frxClass, frxExportBaseDialog,
+  frxExportPDF, frxDBSet;
+
+type
+  TfrmPesquisa = class(TForm)
+    pnlTopPesquisa: TPanel;
+    pnlRodapePesquisa: TPanel;
+    dbGridPesquisa: TDBGrid;
+    dbNavPesquisa: TDBNavigator;
+    edtPesquisa: TEdit;
+    Label1: TLabel;
+    btnPesquisa: TButton;
+    btnImprimir: TButton;
+    cmbOpcao: TComboBox;
+    Label2: TLabel;
+    Relatorio: TfrxReport;
+    frxCadastro: TfrxDBDataset;
+    frxPDFExport: TfrxPDFExport;
+    procedure btnPesquisaClick(Sender: TObject);
+    procedure btnImprimirClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmPesquisa: TfrmPesquisa;
+
+implementation
+
+{$R *.dfm}
+
+uses UCadastro;
+
+procedure TfrmPesquisa.btnImprimirClick(Sender: TObject);
+begin
+  relatorio.ShowReport('lista.FR3');
+end;
+
+procedure TfrmPesquisa.btnPesquisaClick(Sender: TObject);
+begin
+   frmCadastro.QCadastro.Close;
+   frmCadastro.QCadastro.SQL.Add('');
+   frmCadastro.QCadastro.SQL.Clear;
+   frmCadastro.QCadastro.SQL.Add('select * from contato');
+
+   case cmbOpcao.ItemIndex of
+    0:begin
+      frmCadastro.QCadastro.SQL.Add('where id_contato =:pcodigo');
+      frmCadastro.QCadastro.ParamByName('pcodigo').AsInteger := strtoint(edtPesquisa.Text);
+    end;
+
+    1:begin
+      frmCadastro.QCadastro.SQL.Add('where nome =:pnome');
+      frmCadastro.QCadastro.ParamByName('pnome').AsString := (edtPesquisa.Text);
+    end;
+
+   end;
+   frmCadastro.QCadastro.Open;
+
+   if frmCadastro.QCadastro.IsEmpty then
+      begin
+        messagedlg('Nenhum registro encontrado!', mtInformation,[mbOk],0);
+      end;
+
+end;
+
+end.
